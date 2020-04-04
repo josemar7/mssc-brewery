@@ -1,7 +1,6 @@
 package guru.springframework.msscbrewery.web.controller;
 
-import guru.springframework.msscbrewery.services.BeerService;
-import guru.springframework.msscbrewery.web.model.BeerDto;
+import guru.springframework.msscbrewery.web.client.BreweryClient;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,25 +8,23 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.UUID;
-
 /**
  * Created by jt on 2019-04-20.
  */
-@RequestMapping("/api/v1/beer")
+@RequestMapping("/users")
 @RestController
 public class BeerController {
 
-    private final BeerService beerService;
+    private final BreweryClient breweryClient;
 
-    public BeerController(BeerService beerService) {
-        this.beerService = beerService;
+    public BeerController(BreweryClient breweryClient) {
+        this.breweryClient = breweryClient;
     }
 
-    @GetMapping({"/{beerId}"})
-    public ResponseEntity<BeerDto> getBeer(@PathVariable("beerId") UUID beerId){
+    @GetMapping({"/{userId}"})
+    public ResponseEntity<Object> getUser(@PathVariable("userId") String userId){
 
-        return new ResponseEntity<>(beerService.getBeerById(beerId), HttpStatus.OK);
+        return new ResponseEntity<>(breweryClient.getUser(Integer.valueOf(userId)), HttpStatus.OK);
     }
 
 }
